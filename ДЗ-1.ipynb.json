@@ -1,0 +1,206 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 1,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Задание 1 (варинат 1)\n",
+    "long_phrase = 'Насколько проще было бы писать программы, если бы не заказчики'\n",
+    "short_phrase = '640Кб должно хватить для любых задач. Билл Гейтс (по легенде)'\n",
+    "len(long_phrase)> len (short_phrase)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "True"
+      ]
+     },
+     "execution_count": 2,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#Задание 1 (варинат 2)\n",
+    "'Насколько проще было бы писать программы, если бы не заказчики'> \\\n",
+    "    '640Кб должно хватить для любых задач. Билл Гейтс (по легенде)'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Объем файла равен  213.68 Mb\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Задание 2\n",
+    "b=213680000\n",
+    "mb=round(b/1000000,2)\n",
+    "print('Объем файла равен ',mb,'Mb')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Месяц рождения12\n",
+      "Число рождения11\n",
+      "Стрелец\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Задание 3\n",
+    "month_of_birthday = int(input('Месяц рождения'))\n",
+    "date_of__birthday = int(input('Число рождения'))\n",
+    "if month_of_birthday < 2:\n",
+    "  if date_of__birthday < 20:\n",
+    "    print ('Козерог')\n",
+    "  else:\n",
+    "    print ('Водолей')\n",
+    "elif month_of_birthday < 3:\n",
+    "  if date_of__birthday < 19:\n",
+    "    print ('Водолей')\n",
+    "  else:\n",
+    "    print ('Рыба')\n",
+    "elif month_of_birthday < 4:\n",
+    "  if date_of__birthday < 21:\n",
+    "    print ('Рыба')\n",
+    "  else:\n",
+    "    print ('Овен')\n",
+    "elif month_of_birthday < 5:\n",
+    "  if date_of__birthday < 20:\n",
+    "    print ('Овен')\n",
+    "  else:\n",
+    "    print ('Телец')\n",
+    "elif month_of_birthday < 6:\n",
+    "  if date_of__birthday < 21:\n",
+    "    print ('Телец')\n",
+    "  else:\n",
+    "    print ('Близнецы')\n",
+    "elif month_of_birthday < 7:\n",
+    "  if date_of__birthday < 21:\n",
+    "    print ('Близнецы')\n",
+    "  else:\n",
+    "    print ('Рак')\n",
+    "elif month_of_birthday < 8:\n",
+    "  if date_of__birthday < 23:\n",
+    "    print ('Рак')\n",
+    "  else:\n",
+    "    print ('Лев')\n",
+    "elif month_of_birthday < 9:\n",
+    "  if date_of__birthday < 23:\n",
+    "    print ('Лев')\n",
+    "  else:\n",
+    "    print ('Дева')\n",
+    "elif month_of_birthday < 10:\n",
+    "  if date_of__birthday < 23:\n",
+    "    print ('Дева')\n",
+    "  else:\n",
+    "    print ('Весы')\n",
+    "elif month_of_birthday < 11:\n",
+    "  if date_of__birthday < 23:\n",
+    "    print ('Весы')\n",
+    "  else:\n",
+    "    print ('Скорпион')\n",
+    "elif month_of_birthday < 12:\n",
+    "  if date_of__birthday < 22:\n",
+    "    print ('Скорпион')\n",
+    "  else:\n",
+    "    print ('Стрелец')\n",
+    "else:\n",
+    "    print ('Стрелец')\n",
+    "    "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Введите заработанную плату в месяц100000\n",
+      "Введите сколько процентов уходит на ипотеку 30\n",
+      "Введите сколько процентов уходит на жизнь 50\n",
+      "Введите количество премий за год 2\n",
+      "Вы тратите на ипотеку в год  360000.0\n",
+      "Вы откладываете в сбережения в год  340000.0\n"
+     ]
+    }
+   ],
+   "source": [
+    "#Задание 4 Приложение для личного финансового планирования (без учета валюты)\n",
+    "monthly_wages = int(input('Введите заработанную плату в месяц'))\n",
+    "percentage_of__mortgage = int(input('Введите сколько процентов уходит на ипотеку '))\n",
+    "percentage_of__life_expenses = int(input('Введите сколько процентов уходит на жизнь '))\n",
+    "number_of_bonuses = int(input('Введите количество премий за год '))\n",
+    "morg_expenses = percentage_of__mortgage/100 * monthly_wages * 12\n",
+    "savings = monthly_wages * 12 * (1 - (percentage_of__life_expenses/100) - (percentage_of__mortgage/100))+ (monthly_wages *number_of_bonuses *0.5)\n",
+    "print('Вы тратите на ипотеку в год ', morg_expenses)\n",
+    "print('Вы откладываете в сбережения в год ', savings)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
