@@ -1,0 +1,268 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Датских крон\n"
+     ]
+    }
+   ],
+   "source": [
+    "# Задание 1.\n",
+    "# Напишите функцию, которая возвращает название валюты (поле ‘Name’)\n",
+    "#с максимальным значением курса с помощью сервиса https://www.cbr-xml-daily.ru/daily_json.js\n",
+    "\n",
+    "import requests\n",
+    "\n",
+    "def keywithmaxval():\n",
+    "   \"\"\" create a list of the dict keys and values; return the key with the max value\"\"\"\n",
+    "   r = requests.get('https://www.cbr-xml-daily.ru/daily_json.js')\n",
+    "   some_dict = {}\n",
+    "   for dicts in r.json()['Valute'].values():\n",
+    "        some_dict[dicts['Name']] = dicts['Value']\n",
+    "   v = list(some_dict.values())\n",
+    "   k = list(some_dict.keys())\n",
+    "   return k[v.index(max(v))]\n",
+    "print(keywithmaxval())"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Задание 2.\n",
+    "# Добавьте в класс Rate параметр diff (со значениями True или False), который в случае значения True\n",
+    "# в методах eur и usd будет возвращать не курс валюты, а изменение по сравнению в прошлым значением.\n",
+    "# Считайте, self.diff будет принимать значение True только при возврате значения курса.\n",
+    "# При отображении всей информации о валюте он не используется.\n",
+    "\n",
+    "import requests\n",
+    "\n",
+    "class Rate:\n",
+    "    def __init__(self, format_='value', diff_ = True):\n",
+    "        self.format = format_\n",
+    "        self.diff = diff_\n",
+    "        \n",
+    "    def exchange_rates(self):\n",
+    "        \"\"\"\n",
+    "        Возвращает информацию о валюте в определенном виде\n",
+    "        \"\"\"\n",
+    "        r = requests.get('https://www.cbr-xml-daily.ru/daily_json.js')\n",
+    "        return r.json()['Valute']\n",
+    "    \n",
+    "    def make_format(self,currency):\n",
+    "        \"\"\"Возвращает информацию о валюте в двух видах: полной и краткой\"\"\"\n",
+    "        response=self.exchange_rates()\n",
+    "        if currency in response:\n",
+    "            if self.format =='full':\n",
+    "                return response [currency]\n",
+    "            \n",
+    "            if self.format =='value' and self.diff == True:\n",
+    "                return response [currency]['Value']- response [currency]['Previous']    \n",
+    "        return 'Error'\n",
+    "    \n",
+    "    def eur(self):\n",
+    "        \"\"\"Возвращает курс евро на сегодня в формате self.format\"\"\"\n",
+    "        return self.make_format('EUR')\n",
+    "    \n",
+    "    def usd(self):\n",
+    "        \"\"\"Возвращает курс доллара на сегодня в формате self.format\"\"\"\n",
+    "        return self.make_format('USD')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0.028199999999998226"
+      ]
+     },
+     "execution_count": 17,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "r = Rate()\n",
+    "r.eur()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'ID': 'R01239',\n",
+       " 'NumCode': '978',\n",
+       " 'CharCode': 'EUR',\n",
+       " 'Nominal': 1,\n",
+       " 'Name': 'Евро',\n",
+       " 'Value': 73.9766,\n",
+       " 'Previous': 73.9484}"
+      ]
+     },
+     "execution_count": 18,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "Rate('full').eur()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 19,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "'Error'"
+      ]
+     },
+     "execution_count": 19,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "Rate('False').eur()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "#Задание 3.\n",
+    "# Напишите класс Designer,который учитывает количество международных премий для дизайнеров.\n",
+    "# Считайте, что при выходе на работу сотрудник уже имеет две премии и их количество не меняется со стажем\n",
+    "# (конечно если хотите это можно вручную менять).\n",
+    "# Выполните проверку для 20 аккредитаций дизайнера Елены\n",
+    "\n",
+    "class Employee:\n",
+    "    def __init__(self, name, seniority, awards):\n",
+    "        self.name = name\n",
+    "        self.seniority = seniority\n",
+    "        self.awards = awards\n",
+    "        \n",
+    "        self.grade = awards*2\n",
+    "    \n",
+    "    def grade_up(self):\n",
+    "        \"\"\"Повышает уровень сотрудника\"\"\"\n",
+    "        self.grade += 1\n",
+    "    \n",
+    "    def publish_grade(self):\n",
+    "        \"\"\"Публикация результатов аккредитации сотрудников\"\"\"\n",
+    "        print(self.name, self.grade)\n",
+    "        \n",
+    "        \n",
+    "        \n",
+    "class Designer(Employee):\n",
+    "    def __init__(self, name, seniority, awards):\n",
+    "        super().__init__(name, seniority, awards)\n",
+    "\n",
+    "    def check_if_it_is_time_for_upgrade(self):\n",
+    "        # для каждой аккредитации увеличиваем счетчик на 1\n",
+    "        # считаем, что все дизайнеры проходят аккредитацию\n",
+    "        self.seniority += 1\n",
+    "        self.awards += 1\n",
+    "        \n",
+    "        # условие повышения сотрудника за 7 пройденных аккредитаций\n",
+    "        if self.seniority % 7 == 0:\n",
+    "            self.grade_up()\n",
+    "\n",
+    "        # условие повышения сотрудника за международные премии\n",
+    "        if self.awards == 0.5:\n",
+    "            self.grade_up()\n",
+    "            \n",
+    "        # публикация результатов\n",
+    "        return self.publish_grade()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Елена 4\n",
+      "Елена 4\n",
+      "Елена 4\n",
+      "Елена 4\n",
+      "Елена 4\n",
+      "Елена 4\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 5\n",
+      "Елена 6\n",
+      "Елена 6\n",
+      "Елена 6\n",
+      "Елена 6\n",
+      "Елена 6\n",
+      "Елена 6\n",
+      "Елена 6\n"
+     ]
+    }
+   ],
+   "source": [
+    "elena = Designer(name ='Елена', seniority=0, awards=2)\n",
+    "\n",
+    "for i in range(20):\n",
+    "    elena.check_if_it_is_time_for_upgrade()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.7.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
